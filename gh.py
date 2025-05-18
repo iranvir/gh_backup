@@ -24,9 +24,11 @@ def get_repo_list():
         return []
 
 def main():
-    create_bkp_dir()
+    backup_dir = create_bkp_dir()
     repo_list = get_repo_list()
-    print(repo_list)
+    
+    print(backup_dir)
+
 
 if __name__ == '__main__':
     main()
