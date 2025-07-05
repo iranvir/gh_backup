@@ -1,11 +1,7 @@
 #!/usr/bin/env python
-
-# To use this script, generate a GitHub PAT with just metadata access. If you have
-# your GitHub SSH key on the device where this script is running. You will be able
-# to clone all your repositories.
-
 import json
 import time
+import zipfile
 import requests
 import argparse
 import subprocess
@@ -47,3 +43,9 @@ for repo in repos:
         cwd=repo_path,
     )
 
+backup_archive = Path("./backups/timestamp.zip")
+with zipfile.ZipFile(backup_archive, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    for file in backup_dir.rglob('*'):
+        # Create a relative path for the file within the zip archive
+        relative_path = file.relative_to(backup_dir.parent)
+        zipf.write(file, relative_path)
